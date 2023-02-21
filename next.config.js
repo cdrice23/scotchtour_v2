@@ -9,11 +9,6 @@ const nextConfig = {
   },
   // Adding policies:
   async headers() {
-    const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  style-src 'self';
-`;
     return [
       {
         source: "/:path*",
@@ -37,10 +32,6 @@ const nextConfig = {
           {
             key: "Referrer-Policy",
             value: "origin-when-cross-origin",
-          },
-          {
-            key: "Content-Security-Policy",
-            value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
           },
         ],
       },
