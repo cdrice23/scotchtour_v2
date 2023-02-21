@@ -12,7 +12,7 @@ const nextConfig = {
     const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self';
-  style-src 'self''
+  style-src 'self';
 `;
     return [
       {
