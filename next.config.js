@@ -1,3 +1,5 @@
+import uuidv4 from "uuid/v4";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -9,12 +11,11 @@ const nextConfig = {
   },
   // Adding policies:
   async headers() {
+    const nonce = new Buffer(uuidv4()).toString("base64");
     const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self';
-  child-src example.com;
-  style-src 'self' example.com;
-  font-src 'self';  
+  style-src 'self' 'nonce-${nonce}'
 `;
     return [
       {
