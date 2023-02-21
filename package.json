@@ -19,6 +19,8 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.11",
     "@next/font": "^13.1.2",
+    "@upstash/ratelimit": "^0.3.6",
+    "@upstash/redis": "^1.20.0",
     "axios": "^1.2.1",
     "chart.js": "^4.1.2",
     "chartjs-chart-wordcloud": "^4.1.0",
