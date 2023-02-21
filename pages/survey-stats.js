@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { navItems } from "../constants/siteContent";
 import DrawerAppBar from "../components/DrawerAppBar";
 import SurveyCharts from "../components/SurveyCharts";
