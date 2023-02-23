@@ -20,7 +20,6 @@ export default function ScrollBox(props) {
   const imgSizing = props.content.imgSizing === "grow" ? styles.grow : "";
   const imgShow = props.content.imageUrl ? styles.imageShow : styles.imageHide;
   const imgStyle = `${imgSizing} ${imgShow}`;
-  console.log(imgStyle);
 
   return (
     <Grid
