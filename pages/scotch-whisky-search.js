@@ -10,17 +10,12 @@ import SearchDrawer from "../components/SearchDrawer";
 // import connectDb from "../services/connectDb";
 import axios from "axios";
 import clientPromise from "../mongodb";
-// testing with Recoil
-import { surveyResultsState, whiskyListState } from "../components/atoms";
-import { useRecoilState } from "recoil";
 
 export async function getStaticProps() {
   const client = await clientPromise;
   const db = client.db("scotch_tour_v2");
   const whiskies = await db.collection("whisky_db").find({}).toArray();
-  const initialRecoilState = {
-    whiskyList: whiskies,
-  };
+
   if (!whiskies) {
     return {
       notFound: true,
@@ -55,7 +50,7 @@ export async function getStaticProps() {
 //   return { props: { whiskies } };
 // }
 
-export default function ScotchDb({ whiskies, initialRecoilState }) {
+export default function ScotchDb({ whiskies }) {
   // state
   const [records, setRecords] = useState(whiskies);
   const [filterFn, setFilterFn] = useState({

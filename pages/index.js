@@ -45,12 +45,13 @@ export default function Home(props) {
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
 
   useEffect(() => {
-    setWhiskyList(props.initialRecoilState.whiskyList);
-    setSurveyData(props.initialRecoilState.surveyData);
+    if (!whiskyList.length > 0) {
+      setWhiskyList(whiskies);
+    }
+    if (!surveyData.length > 0) {
+      setSurveyData(surveyResults);
+    }
   }, []);
-
-  console.log(whiskylist);
-  console.log(surveyData);
   return (
     <>
       <DrawerAppBar title={navItems[0].title} />

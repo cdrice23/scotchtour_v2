@@ -36,11 +36,9 @@ function HideOnScroll(props) {
 function SearchInput({ searchValue, handleChangeValue }, ref) {
   // state
   const [expanded, setExpanded] = useState(true);
-  // console.log(expanded);
 
   // helpers
   const trigger = useScrollTrigger({ threshold: 0 });
-  // console.log(expanded);
 
   // handlers
   const handleExpand = () => {

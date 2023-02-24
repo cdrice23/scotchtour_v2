@@ -28,7 +28,6 @@ function HideOnScroll(props) {
   const handleClickAway = () => {
     setHidden(!hidden);
   };
-  console.log(hidden);
   return (
     <Slide appear={false} direction="up" in={!trigger}>
       {children}

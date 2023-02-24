@@ -19,18 +19,18 @@ function MyApp({
   pageProps,
   emotionCache = clientSideEmotionCache,
   initialRecoilState = {
-    whiskyList: {
-      whisky: "Loading...",
-      type: "",
-      cost: "",
-      tags: [],
-    },
-    surveyResultsData: {
-      "hover-feedback": 0,
-      "interest-slider": 3,
-      "scotch-brands": [],
-      "favorite-whisky": "Loading Survey Data...",
-    },
+    // whiskyList: {
+    //   whisky: "",
+    //   type: "",
+    //   cost: "",
+    //   tags: [],
+    // },
+    // surveyResultsData: {
+    //   "hover-feedback": 0,
+    //   "interest-slider": 3,
+    //   "scotch-brands": [],
+    //   "favorite-whisky": "",
+    // },
   },
 }) {
   const all_atoms = {

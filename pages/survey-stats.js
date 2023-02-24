@@ -8,6 +8,8 @@ import { SurveyChartData } from "../components/ChartData";
 import { Typography } from "@mui/material";
 import axios from "axios";
 import clientPromise from "../mongodb";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { surveyResultsState, whiskyListState } from "../components/atoms";
 
 export async function getServerSideProps() {
   const client = await clientPromise;
@@ -37,6 +39,18 @@ export async function getServerSideProps() {
 }
 
 export default function SurveyStats({ whiskies, surveyResults }) {
+  // state
+  const [whiskyList, setWhiskyList] = useRecoilState(whiskyListState);
+  const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
+
+  useEffect(() => {
+    if (!whiskyList.length > 0) {
+      setWhiskyList(whiskies);
+    }
+    if (!surveyData.length > 0) {
+      setSurveyData(surveyResults);
+    }
+  }, []);
   // helpers
   const {
     totalcount,
@@ -46,7 +60,7 @@ export default function SurveyStats({ whiskies, surveyResults }) {
     comparedtodata,
     hoverdata,
     whiskynotedata,
-  } = SurveyChartData(whiskies, surveyResults);
+  } = SurveyChartData(whiskyList, surveyData);
 
   if (!whiskies || !surveyResults)
     return (

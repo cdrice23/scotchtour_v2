@@ -11,7 +11,6 @@ const API_URL = baseURL + "/api/whiskies";
 // Get all whiskies from db
 const getWhisky_db = async () => {
   const res = await axios.get(API_URL);
-  console.log(baseURL + "/api/whiskies");
   return res.data;
 };
 

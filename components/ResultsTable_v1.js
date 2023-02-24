@@ -114,7 +114,6 @@ export default function ResultsTable_v1(
       scrollStyle === "pagination"
         ? [page * rowsPerPage, (page + 1) * rowsPerPage]
         : "";
-    console.log(sliceStyle);
     return objectSort(
       filterFn.fn(records),
       getComparisonType(order, orderBy)

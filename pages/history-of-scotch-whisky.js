@@ -9,7 +9,6 @@ import { HistoryChartData } from "../components/ChartData";
 
 export default function History(pageProps) {
   const { yeardata } = HistoryChartData();
-  console.log(yeardata);
   return (
     <>
       <DrawerAppBar title={navItems[2].title} />

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import Survey from "../components/Survey";
 import { navItems } from "../constants/siteContent";
 import DrawerAppBar from "../components/DrawerAppBar";
@@ -11,21 +11,49 @@ import {
 import surveyService from "../services/surveyService";
 import useRouter from "next/router";
 import clientPromise from "../mongodb";
+import { surveyResultsState, whiskyListState } from "../components/atoms";
+import { useRecoilState } from "recoil";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const client = await clientPromise;
   const db = client.db("scotch_tour_v2");
   const whiskies = await db.collection("whisky_db").find({}).toArray();
+  const surveyResults = await db
+    .collection("visitor_survey")
+    .find({})
+    .toArray();
+
   if (!whiskies) {
     return {
       notFound: true,
     };
   }
-  return { props: { whiskies: JSON.parse(JSON.stringify(whiskies)) } };
+  if (!surveyResults) {
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: {
+      whiskies: JSON.parse(JSON.stringify(whiskies)),
+      surveyResults: JSON.parse(JSON.stringify(surveyResults)),
+    },
+  };
 }
 
-export default function VisitorSurvey({ whiskies }) {
+export default function VisitorSurvey({ whiskies, surveyResults }) {
   // state
+  const [whiskyList, setWhiskyList] = useRecoilState(whiskyListState);
+  const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
+
+  useEffect(() => {
+    if (!whiskyList.length > 0) {
+      setWhiskyList(whiskies);
+    }
+    if (!surveyData.length > 0) {
+      setSurveyData(surveyResults);
+    }
+  }, []);
   const [surveyInput, setSurveyInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     initialFormValues
@@ -51,6 +79,7 @@ export default function VisitorSurvey({ whiskies }) {
   };
   const handleSurveySubmit = () => {
     submitSurvey(surveyInput);
+    setSurveyData([...surveyData, surveyInput]);
     router.push("/survey-stats");
   };
 
