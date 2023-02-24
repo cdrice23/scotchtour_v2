@@ -40,7 +40,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home(props) {
+export default function Home({ whiskies, surveyResults }) {
   const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
 
