@@ -40,12 +40,12 @@ export async function getServerSideProps() {
 
 export default function SurveyStats({ whiskies, surveyResults }) {
   // state
-  const [whiskyList, setWhiskyList] = useRecoilState(whiskyListState);
+  const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
 
   useEffect(() => {
-    if (!whiskyList.length > 0) {
-      setWhiskyList(whiskies);
+    if (!whiskySet.length > 0) {
+      setWhiskySet(whiskies);
     }
     if (!surveyData.length > 0) {
       setSurveyData(surveyResults);
@@ -60,7 +60,7 @@ export default function SurveyStats({ whiskies, surveyResults }) {
     comparedtodata,
     hoverdata,
     whiskynotedata,
-  } = SurveyChartData(whiskyList, surveyData);
+  } = SurveyChartData(whiskySet, surveyData);
 
   if (!whiskies || !surveyResults)
     return (

@@ -41,12 +41,12 @@ export async function getServerSideProps() {
 }
 
 export default function Home(props) {
-  const [whiskyList, setWhiskyList] = useRecoilState(whiskyListState);
+  const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
 
   useEffect(() => {
-    if (!whiskyList.length > 0) {
-      setWhiskyList(whiskies);
+    if (!whiskySet.length > 0) {
+      setWhiskySet(whiskies);
     }
     if (!surveyData.length > 0) {
       setSurveyData(surveyResults);
