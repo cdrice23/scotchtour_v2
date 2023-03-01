@@ -45,6 +45,10 @@ export default function VisitorSurvey({ whiskies, surveyResults }) {
   // state
   const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
+  // console.log(whiskySet);
+  // console.log(surveyData);
+  // console.log(whiskies);
+  // console.log(surveyResults);
 
   useEffect(() => {
     if (!whiskySet.length > 0) {
@@ -64,7 +68,6 @@ export default function VisitorSurvey({ whiskies, surveyResults }) {
     ? false
     : true;
   const submitSurvey = (data) => surveyService.submitSurvey(data);
-  const router = useRouter;
 
   // handlers
   const handleChangeValue = (event) => {
@@ -80,6 +83,7 @@ export default function VisitorSurvey({ whiskies, surveyResults }) {
   const handleSurveySubmit = () => {
     submitSurvey(surveyInput);
     setSurveyData([...surveyData, surveyInput]);
+    const router = useRouter;
     router.push("/survey-stats");
   };
 
