@@ -96,7 +96,7 @@ export default function VisitorSurvey({ whiskies, surveyResults }) {
         handleSurveySubmit={handleSurveySubmit}
         disableSubmit={disableSubmit}
         brandList={brandData.map((obj) => obj.name)}
-        whiskyList={whiskies.map((obj) => obj.whisky)}
+        whiskyList={whiskySet.map((obj) => obj.whisky)}
       />
     </>
   );
