@@ -43,15 +43,29 @@ export default function SurveyStats({ whiskies, surveyResults }) {
   const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
 
-  useEffect(() => {
-    if (!whiskySet.length > 0) {
-      setWhiskySet(whiskies);
-    }
-    if (!surveyData.length > 0) {
-      setSurveyData(surveyResults);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!whiskySet.length > 0) {
+  //     axios
+  //       .get("/api/whiskeys")
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((data) => setWhiskySet(data));
+  //   }
+  //   if (!surveyData.length > 0) {
+  //     fetch("/api/surveys")
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((data) => {
+  //         setSurveyData(data);
+  //       });
+  //   }
+  // }, []);
   // helpers
+  const whiskyChartData = whiskySet.length > 0 ? whiskySet : whiskies;
+  const surveyResultChartData =
+    surveyData.length > 0 ? surveyData : surveyResults;
   const {
     totalcount,
     recognizeddata,
@@ -60,7 +74,7 @@ export default function SurveyStats({ whiskies, surveyResults }) {
     comparedtodata,
     hoverdata,
     whiskynotedata,
-  } = SurveyChartData(whiskySet, surveyData);
+  } = SurveyChartData(whiskyChartData, surveyResultChartData);
 
   if (!whiskies || !surveyResults)
     return (
