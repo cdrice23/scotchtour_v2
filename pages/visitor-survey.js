@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import Survey from "../components/Survey";
 import { navItems } from "../constants/siteContent";
 import DrawerAppBar from "../components/DrawerAppBar";
@@ -14,50 +14,35 @@ import clientPromise from "../mongodb";
 import { surveyResultsState, whiskyListState } from "../components/atoms";
 import { useRecoilState } from "recoil";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const client = await clientPromise;
   const db = client.db("scotch_tour_v2");
   const whiskies = await db.collection("whisky_db").find({}).toArray();
-  const surveyResults = await db
-    .collection("visitor_survey")
-    .find({})
-    .toArray();
-
   if (!whiskies) {
     return {
       notFound: true,
     };
   }
-  if (!surveyResults) {
-    return {
-      notFound: true,
-    };
-  }
-  return {
-    props: {
-      whiskies: JSON.parse(JSON.stringify(whiskies)),
-      surveyResults: JSON.parse(JSON.stringify(surveyResults)),
-    },
-  };
+  return { props: { whiskies: JSON.parse(JSON.stringify(whiskies)) } };
 }
 
-export default function VisitorSurvey({ whiskies, surveyResults }) {
+export default function VisitorSurvey({ whiskies }) {
   // state
   const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
-  // console.log(whiskySet);
-  // console.log(surveyData);
-  // console.log(whiskies);
-  // console.log(surveyResults);
+  console.log(whiskySet);
+  console.log(surveyData);
 
   useEffect(() => {
-    if (!whiskySet.length > 0) {
-      setWhiskySet(whiskies);
-    }
-    if (!surveyData.length > 0) {
-      setSurveyData(surveyResults);
-    }
+    fetch("/api/surveys")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setSurveyData(data);
+      });
   }, []);
+
   const [surveyInput, setSurveyInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     initialFormValues
@@ -100,7 +85,7 @@ export default function VisitorSurvey({ whiskies, surveyResults }) {
         handleSurveySubmit={handleSurveySubmit}
         disableSubmit={disableSubmit}
         brandList={brandData.map((obj) => obj.name)}
-        whiskyList={whiskySet.map((obj) => obj.whisky)}
+        whiskyList={whiskies.map((obj) => obj.whisky)}
       />
     </>
   );

@@ -8,7 +8,6 @@ const options = {
 
 let client;
 let clientPromise;
-let cached;
 
 if (!process.env.MONGO_URI) {
   throw new Error("Add Mongo URI to .env.local");
@@ -21,15 +20,8 @@ if (process.env.NODE_ENV === "development") {
   }
   clientPromise = global._mongoClientPromise;
 } else {
-  if (!cached) {
-    client = new MongoClient(uri, options);
-    clientPromise = client.connect();
-    cached = clientPromise;
-    console.log("I am a new connection!");
-  } else {
-    clientPromise = cached;
-    console.log("I am cached!");
-  }
+  client = new MongoClient(uri, options);
+  clientPromise = client.connect();
 }
 
 export default clientPromise;

@@ -6,6 +6,10 @@ import { homeContent } from "../constants/siteContent";
 import { surveyResultsState, whiskyListState } from "../components/atoms";
 import { useRecoilState } from "recoil";
 import clientPromise from "../mongodb";
+import whiskyDbService from "../services/whiskyDbService";
+import surveyService from "../services/surveyService";
+import axios from "axios";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 export async function getServerSideProps() {
   const client = await clientPromise;
@@ -15,11 +19,6 @@ export async function getServerSideProps() {
     .collection("visitor_survey")
     .find({})
     .toArray();
-
-  const initialRecoilState = {
-    whiskyList: JSON.parse(JSON.stringify(whiskies)),
-    surveyData: JSON.parse(JSON.stringify(surveyResults)),
-  };
 
   if (!whiskies) {
     return {
@@ -35,7 +34,6 @@ export async function getServerSideProps() {
     props: {
       whiskies: JSON.parse(JSON.stringify(whiskies)),
       surveyResults: JSON.parse(JSON.stringify(surveyResults)),
-      initialRecoilState,
     },
   };
 }
@@ -43,10 +41,10 @@ export async function getServerSideProps() {
 export default function Home({ whiskies, surveyResults }) {
   const [whiskySet, setWhiskySet] = useRecoilState(whiskyListState);
   const [surveyData, setSurveyData] = useRecoilState(surveyResultsState);
-  // console.log(whiskySet);
-  // console.log(surveyData);
-  // console.log(whiskies);
-  // console.log(surveyResults);
+  console.log(whiskySet);
+  console.log(surveyData);
+  console.log(whiskies);
+  console.log(surveyResults);
 
   useEffect(() => {
     if (!whiskySet.length > 0) {
@@ -63,9 +61,7 @@ export default function Home({ whiskies, surveyResults }) {
         title={homeContent.mainTitle}
         hero={homeContent.hero}
         mainText={homeContent.mainText}
-        // alt={homeContent.alt}
-        // imgHeight={homeContent.imgHeight}
-        // imgWidth={homeContent.imgWidth}
+        alt={homeContent.alt}
       />
     </>
   );
