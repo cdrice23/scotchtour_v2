@@ -4,6 +4,7 @@ import styles from "../styles/MapPage.module.css";
 import { theme } from "../styles/theme";
 import Image from "next/image";
 
+
 export default function MapPage(props) {
   // state
   const [anchorEl, setAnchorEl] = useState(null);

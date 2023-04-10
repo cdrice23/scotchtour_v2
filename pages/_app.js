@@ -36,22 +36,24 @@ function MyApp({
         set(atom, value);
       });
   return (
-    <StyledEngineProvider injectFirst>
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
       <CacheProvider value={emotionCache}>
-        {/* cacheprovider and head tested from MUI/next.js tutorial */}
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <RecoilRoot
-            initializeState={initializeRecoilState(initialRecoilState)}
-          >
-            <Component {...pageProps} />
-          </RecoilRoot>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          {/* cacheprovider and head tested from MUI/next.js tutorial */}
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <RecoilRoot
+              initializeState={initializeRecoilState(initialRecoilState)}
+            >
+              <Component {...pageProps} />
+            </RecoilRoot>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </CacheProvider>
-    </StyledEngineProvider>
+    </>
   );
 }
 
